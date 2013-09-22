@@ -1,0 +1,348 @@
+<!DOCTYPE HTML>
+<!-- <html lang="en-US"> -->
+<html lang="en-US" class="fade">
+<!-- 
+  ^ a class of "fade" makes slides fade smoothly into one another
+ -->
+<!-- <html lang="en-US" class="nonumbers"> -->
+
+<head>
+  <meta charset="UTF-8">
+  <title>Multiprocess Desktop Firefox</title>
+  <meta name="viewport" content="width=device-width, user-scalable=yes">
+  <link rel="stylesheet" href="themes/mozilla/styles/style.css">
+</head>
+<body class="list">
+  <header class="caption">
+    <h1>Electrolysis: Multiprocess Desktop Firefox</h1>
+    <p class="footer">
+      Tom Schuster, Mozilla Intern 2013, <a href="http://twitter.com/evilpies">@evilpies</a>
+    </p>
+  </header>
+  <aside class="talkdescription">
+    <p>This slide deck is using the shower system - roll over the previews to see the notes and click any slide to go into presentation mode. Then use keys to navigate. <button onclick="goFullScreen()">Go fullscreen</button></p>
+    <p class="abstract">
+      <strong>Abstract: </strong>
+       Add your talk abstract here
+    </p>
+  </aside>
+
+  <div id="cover" class="slide"><div>
+    <section>
+      <header>
+        <h2>Multiprocess Desktop Firefox</h2>
+      </header>
+      <img src="pictures/electrolysis.jpg"
+           class="middle shadow" height="400">
+      <small class="byline">
+        Tom Schuster, Intern @ Mozilla 2013
+      </small>
+    </section>
+  </div></div>
+
+  <div id="overview" class="slide"><div>
+    <section>
+      <header>
+        <h2>Overview</h2>
+      </header>
+      <img src="pictures/drawing.svg" class="middle" style="width: 550px; height: 600px;"/>
+    </section>
+  </div></div>
+
+
+
+  <div id="motiviation" class="slide shout"><div>
+    <section>
+      <header>
+        <h2>Motiviation</h2>
+      </header>
+    </section>
+  </div></div>
+
+  <div id="responsiveness" class="slide"><div>
+    <section>
+      <header>
+        <h2>Responsiveness</h2>
+      </header>
+      <img src="pictures/fast.jpg"
+           class="middle">
+      <small class="credits">
+        <a href="http://www.flickr.com/photos/31590610@N03/">
+          Image by Juan_Alvaro
+        </a>
+      </small>
+    </section>
+  </div></div>
+
+  <div id="security" class="slide"><div>
+    <section>
+      <header>
+        <h2>Security</h2>
+      </header>
+      <img src="pictures/crash.jpg"
+           class="middle">
+      <small class="credits">
+        <a href="http://www.flickr.com/photos/deks/">
+          Image by Christopher Woo
+        </a>
+      </small>
+    </section>
+  </div></div>
+
+  <div id="history" class="slide"><div>
+    <section>
+      <header>
+        <h2>History</h2>
+      </header>
+    <ul>
+      <li>September 2009: First Electrolysis Bug</li>
+      <li>March 2011: Out of Process Tabs for Firefox Mobile 4.0 Beta</li>
+      <li>June 2011: Out of Process Plugin Sandboxing</li>
+      <li><b>November 2011: Electrolysis project put on hold</b></li>
+      <li>February 2012: Firefox OS Demo (Process per App)</li>
+      <li><b>2013: Reboot</b></li>
+    </ul>
+    </section>
+  </div></div>
+
+  <div id="try_again" class="slide shout"><div>
+    <section>
+      <header>
+        <h2>Why try again?</h2>
+      </header>
+    </section>
+  </div></div>
+
+  <div id="foundation" class="slide"><div>
+    <section>
+      <header>
+        <h2>Foundation</h2>
+      </header>
+      <img src="pictures/foundation.jpg"
+           class="middle">
+      <small class="credits">
+        <a href="http://www.flickr.com/photos/armconprecast/8591719111/">
+          Image by Armcon Precast
+        </a>
+      </small>
+    </section>
+  </div></div>
+
+  <div id="addons" class="slide"><div>
+    <section>
+      <header>
+        <h2>Add-ons</h2>
+      </header>
+      <img src="pictures/bricks.jpg"
+           class="middle">
+      <small class="credits">
+        <a href="http://www.flickr.com/photos/eepaul/">
+          Image by Paul Wilkinson
+        </a>
+      </small>
+    </section>
+  </div></div>
+
+  <div id="demo" class="slide shout"><div>
+    <section>
+      <header>
+        <h2>Demo</h2>
+      </header>
+    </section>
+  </div></div>
+
+<!--
+  <div id="what-i-did" class="slide"><div>
+    <section>
+      <header>
+        <h2>What I did</h2>
+      </header>
+    <ul>
+      <li>Addon download/installation</li>
+      <li>Addon testing</li>
+      <li>Addon compatility fixes</li>
+      <li>Downloads</li>
+      <li>Focus management between child/parent</li>
+      <li>Findbar</li>
+      <li>Permission requests</li>
+      <li>Tab icons</li>
+      <li>Tab crashed page (partially)</li>
+      <li>Keyword search</li>
+      <li>CPOW traps and integration</li>
+    </ul>
+    </section>
+  </div></div>
+-->
+
+  <div id="pitfalls" class="slide shout"><div>
+    <section>
+      <header>
+        <h2>Common Pitfalls</h2>
+      </header>
+    </section>
+  </div></div>
+
+   <div id="sync" class="slide"><div>
+    <section>
+      <header>
+        <h2>Synchronous APIs</h2>
+      </header>
+      <div class="middle">
+        <h3>Before</h3>
+        <pre>
+        <code>let result = finder.findAgain("test")</code>
+        <code>showResult(result);</code>
+        </pre>
+        <h3>After</h3>
+        <pre>
+        <code>finder.onresult = (result) => showResult(result)</code>
+        <code>finder.findAgain("test")</code>
+        </pre>
+      </div>
+    </section>
+  </div></div>
+
+  <div id="all-the-things" class="slide"><div>
+    <section>
+      <img src="pictures/asynchronous.jpg"
+           class="middle">
+    </section>
+  </div></div>
+
+  <div id="child-obj" class="slide"><div>
+    <section>
+      <img src="pictures/object.svg" class="middle" style="width: 550px; height: 600px;"/>
+    </section>
+  </div></div>
+
+   <div id="child-obj-1" class="slide"><div>
+    <section>
+      <header>
+        <h2>Using child objects &#8544;</h2>
+      </header>
+      <div class="middle">
+        <h3>Bad</h3>
+        <pre>
+        <code>content.location.href = "next_test.html"</code>
+        </pre>
+        <h3>Great</h3>
+        <pre>
+        <code>browser.loadURI("next_test.html")</code>
+        </pre>
+      </div>
+    </section>
+  </div></div>
+
+   <div id="child-obj-2" class="slide"><div>
+    <section>
+      <header>
+        <h2>Using child objects &#8544;&#8544;</h2>
+      </header>
+      <div class="middle">
+        <h3>Bad</h3>
+        <pre>
+        <code>openDialog(browser.contentWindow)</code>
+        </pre>
+        <h3>Works</h3>
+        <pre>
+        <code>openDialog(browser.ownerDocument.defaultView)</code>
+        </pre>
+      </div>
+    </section>
+  </div></div>
+
+  <div id="child-obj-3" class="slide"><div>
+    <section>
+      <header>
+        <h2>Using child objects &#8544;&#8544;&#8544;</h2>
+      </header>
+      <div class="middle">
+        <h3>Bad</h3>
+        <pre>
+        <code>gBrowser.getBrowserForDocument(browser.contentDocument)</code>
+        </pre>
+        <h3>Great</h3>
+        <pre>
+        <code>browser</code>
+        </pre>
+      </div>
+    </section>
+  </div></div>
+
+  <div id="shim" class="slide shout"><div>
+    <section>
+      <header>
+        <h2>Shim It!</h2>
+      </header>
+    </section>
+  </div></div>
+
+  <div id="browser" class="slide"><div>
+    <section>
+      <img src="pictures/browser.xml.svg" class="middle" style="width: 550px; height: 600px;"/>
+    </section>
+  </div></div>
+
+  <div id="webnavigation" class="slide"><div>
+    <section>
+      <header>
+        <h2>Example</h2>
+      </header>
+      <div class="middle">
+        <h3>WebNavigation Shim<h3>
+        <pre>
+        <code>function loadURI(uri) {</code>
+        <code>&nbsp;sendAsyncMesssage("LoadURI", { uri: uri });</code>
+        <code>}</code>
+        </pre>
+        <h3>Content-Script</h3>
+        <pre>
+        <code>function recieveMessage(msg) {</code>
+        <code>&nbsp;docShell.loadURI(msg.data.uri);</code>
+        <code>}</code>
+        </pre>
+      </div>
+    </section>
+  </div></div>
+
+  <div id="info" class="slide"><div>
+    <section>
+      <div class="middle" style="font-size: 120%">
+        <h2 style="text-align: center; font-size: 140%;">Now in Nightly</h2>
+        <h3>Set <em>browser.tabs.remote</em> to <em>true</em></h3>
+      </div>
+    </section>
+  </div></div>
+
+  <div id="thanks" class="slide"><div>
+    <section>
+      <header>
+        <h2>Thanks</h2>
+      </header>
+      <img src="pictures/redpanda.jpg" class="right" alt="Red panda (Firefox)">
+      <ul class="nobull">
+        <li>Tom Schuster</li>
+        <li>tom@schuster.me</li>
+        <li><a href="http://twitter.com/evilpies">@evilpies</a></li>
+      </ul>
+      <b>Project Page</b>
+      <a href="https://wiki.mozilla.org/Electrolysis">wiki.mozilla.org/Electrolysis</a>
+      <small class="credits">
+        <a href="http://www.flickr.com/photos/54177777@N00/2489350966/">Photo by by V31S70</a>
+      </small>
+
+    <footer class="notes">
+    </footer>
+
+    </section>
+  </div></div>
+
+  <!--
+    To hide progress bar from entire presentation
+    just remove “progress” element.
+    -->
+  <!-- <div class="progress"><div></div></div> -->
+  <script src="scripts/script.js"></script>
+  <!-- Copyright © 2010–2012 Vadim Makeev — pepelsbey.net -->
+</body>
+</html>
