@@ -5,10 +5,11 @@
 html, body {
 	height: 100%;
 	display: grid;
+	margin: 0;
 }
 
 main {
-	margin: 25% auto;
+	margin: auto;
 	width: 30em;
 }
 
