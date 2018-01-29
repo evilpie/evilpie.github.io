@@ -2,6 +2,29 @@
   font-family: sans-serif;
 }
 
-h1 {
-  text-align: center;
+html, body {
+	height: 100%;
+	display: grid;
+}
+
+main {
+	margin: 25% auto;
+	width: 30em;
+}
+
+h1, p, address {
+	width: 100%;
+	text-align: center;
+}
+
+p {
+	font-size: 1.2em;
+}
+
+address {
+	font-size: 1.1em;
+}
+
+a {
+	color: inherit !important;
 }
