@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Uncaught promise rejection in Worker</title>
+</head>
+<body>
+<button>terminate</button>
+<script>
+  let workerScript = `
+  self.onmessage = async () => {
+    console.log("started!");
+    throw new Error("woops");
+    self.postMessage("hi!");
+  }`;
+  let workerScriptUrl = URL.createObjectURL(new Blob([workerScript], {type:"text/plain"}));
+  let worker = new Worker(workerScriptUrl, {type:"module"});
+  worker.onmessage = (e) => {
+    console.log("worker said:", e.data);
+  };
+  worker.postMessage({});
+
+  document.querySelector("button").onclick = () => {
+    worker.terminate();
+  }
+</script>
+</body>
+</html>
