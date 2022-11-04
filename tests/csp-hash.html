@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSP javascript: hash Test</title>
+
+  <meta http-equiv="Content-Security-Policy" content="script-src 'unsafe-hashes' 'sha256-2Wuae3qeQwyKQyEqzyEz/isRnXC433mGErBgkyU3sqE=' 'sha256-2eOeiXV66oQp1BIhtZlZcN6Xk0XozYn7a+DFqsDo+Dk=';">
+</head>
+<body>
+
+<pre>
+with %20 'sha256-2Wuae3qeQwyKQyEqzyEz/isRnXC433mGErBgkyU3sqE='
+with ( ) space 'sha256-2eOeiXV66oQp1BIhtZlZcN6Xk0XozYn7a+DFqsDo+Dk='
+</pre>
+
+<a href="javascript:alert%20('hey')"><code>javascript:alert%20('hey')</code></a><br>
+
+</body>
+</html>
