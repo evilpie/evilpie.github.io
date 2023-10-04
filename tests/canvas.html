@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+<body>
+<canvas id="canvas" width="400" height="150"></canvas>
+<script>
+function f() {
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+
+  ctx.font = "12px serif";
+
+
+  console.time("fillText short");
+  for (var i = 0; i < 1e4; i++) {
+    ctx.fillText("Short", 10, 10);
+  }
+  console.timeEnd("fillText short");
+
+  console.time("fillText very long");
+  for (var i = 0; i < 1e4; i++) {
+    ctx.fillText("A very very very very very very very very very long", 10, 30);
+  }
+  console.timeEnd("fillText very long");
+
+  console.time("fillText fingerprint");
+  for (var i = 0; i < 1e4; i++) {
+    ctx.fillText("<@nv45. F1n63r,Pr1n71n6!", 10, 50);
+  }
+  console.timeEnd("fillText fingerprint");
+}
+
+f();
+</script>
+</body>
+</html>
+
