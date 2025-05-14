@@ -8,42 +8,64 @@
 <pre id="log">
 </pre>
 
-<script>
+<script type="module">
 const PARSERS = {
   "innerHTML"(string) {
     let div = document.createElement("div");
     div.innerHTML = string;
+    return div.innerHTML;
   },
 
   DOMParser(string) {
     const parser = new DOMParser()
-    parser.parseFromString(string, "text/html");
+    let doc = parser.parseFromString(string, "text/html");
+    return doc.documentElement.outerHTML;
   },
 
   "document.parseHTML"(string) {
-    Document.parseHTML(string);
+    let doc = Document.parseHTML(string);
+    return doc.documentElement.outerHTML;
   },
 
   "document.parseHTML with { sanitizer: {} }"(string) {
-    Document.parseHTML(string, { sanitizer: {} });
+    let doc = Document.parseHTML(string, { sanitizer: {} });
+    return doc.documentElement.outerHTML;
   },
 
   "document.parseHTMLUnsafe"(string) {
-    Document.parseHTMLUnsafe(string);
+    let doc = Document.parseHTMLUnsafe(string);
+    return doc.documentElement.outerHTML;
   },
+
+  XMLHttpRequest(string) {
+    console.log("xml");
+    let {promise, resolve, reject} = Promise.withResolvers();
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "data:text/html," + string);
+    xhr.responseType = "document";
+    xhr.overrideMimeType("text/html");
+    xhr.onload = () => {
+      let doc = xhr.response;
+      resolve(doc.documentElement.outerHTML);
+    };
+    xhr.onerror = reject;
+    xhr.send();
+    return promise;
+  }
 }
 
 let log = document.getElementById("log");
 
-for (let [name, parse] of Object.entries(PARSERS)) {
-  parse(`<img src="http://example.com/image?name=${escape(name)}"></img>`);
-  log.textContent += `Parsed using « ${name} »\n`;
-}
-
 window.addEventListener("securitypolicyviolation", event => {
+  console.log("securitypolicyviolation", event);
   let url = new URL(event.blockedURI);
-  log.textContent += `Got a request for « ${url.searchParams.get("name")} »\n`;
+  log.textContent += `Got a request for « ${url.searchParams.get("name")} »!\n`;
 })
+
+for (let [name, parse] of Object.entries(PARSERS)) {
+  let html = await parse(`<img src="http://example.com/image?name=${escape(name)}"></img>`);
+  log.textContent += `Parsed using « ${name} »:\n\t${html}\n`;
+}
 </script>
 </body>
 </html>
