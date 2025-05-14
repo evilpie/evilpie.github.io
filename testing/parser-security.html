@@ -1,0 +1,45 @@
+<head>
+<meta http-equiv="Content-Security-Policy" content="img-src 'self';">
+</head>
+<body>
+
+<pre id="log">
+</pre>
+
+<script>
+const PARSERS = {
+  "innerHTML"(string) {
+    let div = document.createElement("div");
+    div.innerHTML = string;
+  },
+
+  DOMParser(string) {
+    const parser = new DOMParser()
+    parser.parseFromString(string, "text/html");
+  },
+
+  "document.parseHTML"(string) {
+    Document.parseHTML(string);
+  },
+
+  "document.parseHTML with { sanitizer: {} }"(string) {
+    Document.parseHTML(string, { sanitizer: {} });
+  },
+
+  "document.parseHTMLUnsafe"(string) {
+    Document.parseHTMLUnsafe(string);
+  },
+}
+
+let log = document.getElementById("log");
+
+for (let [name, parse] of Object.entries(PARSERS)) {
+  parse(`<img src="http://example.com/image?name=${escape(name)}"></img>`);
+  log.textContent += `Parsed using ${name}\n`;
+}
+
+window.addEventListener("securitypolicyviolation", event => {
+  let url = new URL(event.blockedURI);
+  log.textContent += `Got a request for ${url.searchParams.get("name")}\n`;
+})
+</script>
