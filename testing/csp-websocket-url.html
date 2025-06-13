@@ -2,7 +2,7 @@
 
 <script>
   window.addEventListener("securitypolicyviolation", e => {
-    console.log("CSP Violation", e.blockedURI);
+    alert(`CSP Violation: ${e.blockedURI}`);
   });
 
   new WebSocket("wss://localhost");
