@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Favicon Test Page</title>
+
+  <link rel="icon">
+</head>
+<body>
+
+<style>
+label {
+  line-height: 48px;
+}
+
+img {
+  vertical-align: middle;
+  margin-bottom: 4px;
+  width: 24px;
+  height: 24px;
+}
+</style>
+
+
+<form>
+  <label><input type="radio" id="apng" name="favicon"> APNG <img src="animation.png"/ ></label>
+  <label><input type="radio" id="svg" name="favicon" checked> animated SVG <img src="animation.svg"/ ></label>
+</form>
+
+<script>
+let link = document.querySelector("link[rel=icon]")
+let form = document.querySelector("form");
+
+form.addEventListener("change", e => {
+  if (e.target.id == "apng") {
+    link.href = "animation.png";
+  } else if (e.target.id == "svg") {
+    link.href = "animation.svg"
+  }
+});
+
+</script>
+
+</body>
+</html>
